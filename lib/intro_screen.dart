@@ -14,14 +14,14 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
     IntroScreen(
       title: "Find the Perfect Truck",
       description:
-      "Browse through a wide range of trucks and find the one that suits your requirements. Filter by size, capacity, and other specifications to ensure a perfect match.",
+          "Browse through a wide range of trucks and find the one that suits your requirements. Filter by size, capacity, and other specifications to ensure a perfect match.",
       color: Colors.blue,
       image: 'assets/images/intro_screen_1.png',
     ),
     IntroScreen(
       title: "Track Your Shipment",
       description:
-      "Stay updated throughout the journey. Track your shipment in real-time and receive notifications at every step of the process.",
+          "Stay updated throughout the journey. Track your shipment in real-time and receive notifications at every step of the process.",
       color: Colors.green,
       image: 'assets/images/intro_screen_2.png',
     ),
@@ -33,6 +33,23 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
     ),
   ];
 
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentPageIndex = index;
+    });
+  }
+
+  void _onNextButtonTap() {
+    if (_currentPageIndex < introScreens.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    } else {
+      // Handle Done action
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +58,11 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
           PageView.builder(
             controller: _pageController,
             itemCount: introScreens.length,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPageIndex = index;
-              });
-            },
+            onPageChanged: _onPageChanged,
             itemBuilder: (context, index) {
-              return IntroScreenWidget(introScreens[index]);
+              return IntroScreenWidget(
+                introScreen: introScreens[index],
+              );
             },
           ),
           Positioned(
@@ -61,10 +76,11 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
                 decorator: DotsDecorator(
                   size: const Size.square(9.0),
                   activeSize: const Size(18.0, 9.0),
-                  activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                  activeColor: Colors.white,
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  activeColor: Colors.green,
                   spacing: const EdgeInsets.symmetric(horizontal: 4),
-                  color: Colors.grey,
+                  color: Colors.green,
                 ),
               ),
             ),
@@ -76,23 +92,14 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (_currentPageIndex != introScreens.length - 1)
-                  ElevatedButton(
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: const Text('Next'),
+                ElevatedButton(
+                  onPressed: _onNextButtonTap,
+                  child: Text(
+                    _currentPageIndex == introScreens.length - 1
+                        ? 'Done'
+                        : 'Next',
                   ),
-                if (_currentPageIndex == introScreens.length - 1)
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle Done action
-                    },
-                    child: const Text('Done'),
-                  ),
+                ),
               ],
             ),
           ),
@@ -108,42 +115,80 @@ class IntroScreen {
   final Color color;
   final String image;
 
-  IntroScreen({required this.title, required this.description, required this.color, required this.image});
+  IntroScreen({
+    required this.title,
+    required this.description,
+    required this.color,
+    required this.image,
+  });
 }
 
 class IntroScreenWidget extends StatelessWidget {
   final IntroScreen introScreen;
 
-  IntroScreenWidget(this.introScreen);
+  const IntroScreenWidget({required this.introScreen});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: introScreen.color,
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            introScreen.image,
-            height: 300,
+          Expanded(
+            flex: 6,
+            child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+              return Image.asset(
+                introScreen.image,
+                height: 100,
+              );
+            }),
           ),
-          const SizedBox(height: 20.0),
-          Text(
-            introScreen.title,
-            style: const TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 20.0),
-          Text(
-            introScreen.description,
-            style: const TextStyle(
-              fontSize: 18.0,
-              color: Colors.white,
+          Expanded(
+            flex: 4,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40.0),
+                  topLeft: Radius.circular(40.0),
+                  bottomRight: Radius.circular(0.0),
+                  bottomLeft: Radius.circular(0.0),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      introScreen.title,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Text(
+                      introScreen.description,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 70,
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ],
