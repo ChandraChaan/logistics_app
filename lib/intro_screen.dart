@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class IntroductionScreenPage extends StatefulWidget {
   @override
@@ -8,7 +10,6 @@ class IntroductionScreenPage extends StatefulWidget {
 class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPageIndex = 0;
-
   final List<IntroScreen> introScreens = [
     IntroScreen(
       title: "Find the Perfect Truck",
@@ -50,38 +51,47 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
             },
           ),
           Positioned(
+            left: 0,
+            right: 0,
+            bottom: 80,
+            child: Center(
+              child: DotsIndicator(
+                dotsCount: introScreens.length,
+                position: _currentPageIndex.toDouble(),
+                decorator: DotsDecorator(
+                  size: const Size.square(9.0),
+                  activeSize: const Size(18.0, 9.0),
+                  activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  activeColor: Colors.white,
+                  spacing: const EdgeInsets.symmetric(horizontal: 4),
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             left: 20,
             right: 20,
             bottom: 30,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (_currentPageIndex != 0)
-                  ElevatedButton(
-                    onPressed: () {
-                      _pageController.previousPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Text('Previous'),
-                  ),
                 if (_currentPageIndex != introScreens.length - 1)
                   ElevatedButton(
                     onPressed: () {
                       _pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.ease,
                       );
                     },
-                    child: Text('Next'),
+                    child: const Text('Next'),
                   ),
                 if (_currentPageIndex == introScreens.length - 1)
                   ElevatedButton(
                     onPressed: () {
                       // Handle Done action
                     },
-                    child: Text('Done'),
+                    child: const Text('Done'),
                   ),
               ],
             ),
@@ -110,7 +120,7 @@ class IntroScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: introScreen.color,
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,19 +129,19 @@ class IntroScreenWidget extends StatelessWidget {
             introScreen.image,
             height: 300,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Text(
             introScreen.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 28.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Text(
             introScreen.description,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18.0,
               color: Colors.white,
             ),
