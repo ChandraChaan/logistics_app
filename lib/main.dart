@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logistics_app/sign_in.dart';
 import 'package:logistics_app/slash_screen.dart';
 
 import 'intro_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: IntroductionScreenPage(),
+      home: SingInPage(),
     );
   }
 }
