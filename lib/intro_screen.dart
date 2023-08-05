@@ -15,14 +15,14 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
       title: "Find the Perfect Truck",
       description:
           "Browse through a wide range of trucks and find the one that suits your requirements. Filter by size, capacity, and other specifications to ensure a perfect match.",
-      color: Colors.blue,
+      color: Colors.green,
       image: 'assets/images/intro_screen_1.png',
     ),
     IntroScreen(
       title: "Track Your Shipment",
       description:
           "Stay updated throughout the journey. Track your shipment in real-time and receive notifications at every step of the process.",
-      color: Colors.green,
+      color: Colors.blue,
       image: 'assets/images/intro_screen_2.png',
     ),
     IntroScreen(
@@ -92,12 +92,24 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                  onPressed: _onNextButtonTap,
-                  child: Text(
-                    _currentPageIndex == introScreens.length - 1
-                        ? 'Done'
-                        : 'Next',
+                SizedBox(
+                  width: 83,
+                  child: ElevatedButton(
+                    onPressed: _onNextButtonTap,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                          return _currentPageIndex == introScreens.length - 1
+                              ? Colors.blueAccent
+                              : Colors.green;
+                        },
+                      ),
+                    ),
+                    child: Text(
+                      _currentPageIndex == introScreens.length - 1
+                          ? 'Sign In'
+                          : 'Next',
+                    ),
                   ),
                 ),
               ],
@@ -131,20 +143,22 @@ class IntroScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: introScreen.color,
+      color: introScreen.color.withOpacity(0.2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 6,
-            child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return Image.asset(
-                introScreen.image,
-                height: 100,
-              );
-            }),
+            child: Center(
+              child: SizedBox(
+                height: 320,
+                child: Image.asset(
+                  introScreen.image,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 4,
@@ -161,8 +175,7 @@ class IntroScreenWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
                       height: 40,
@@ -170,16 +183,17 @@ class IntroScreenWidget extends StatelessWidget {
                     Text(
                       introScreen.title,
                       style: const TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(height: 20.0),
                     Text(
                       introScreen.description,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         color: Colors.black,
                       ),
                     ),
