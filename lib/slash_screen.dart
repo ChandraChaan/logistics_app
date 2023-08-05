@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'intro_screen.dart';
+
 class SlashScreen extends StatefulWidget {
   @override
   _SlashScreenState createState() => _SlashScreenState();
@@ -31,6 +33,17 @@ class _SlashScreenState extends State<SlashScreen>
     Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         _truckOffset = MediaQuery.of(context).size.width - 10; // Right side of the screen
+        _animationController.addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            // Animation completed, navigate to IntroductionScreenPage
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => IntroductionScreenPage(),
+              ),
+            );
+          }
+        });
       });
     });
   }
