@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logistics_app/sign_in.dart';
+import 'package:logistics_app/verify_screen.dart';
 
 class SingUpPage extends StatelessWidget {
-  const SingUpPage({super.key});
+  const SingUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,6 @@ class SingUpPage extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(40.0),
                   topLeft: Radius.circular(40.0),
-                  bottomRight: Radius.circular(0.0),
-                  bottomLeft: Radius.circular(0.0),
                 ),
               ),
               child: Padding(
@@ -32,12 +31,10 @@ class SingUpPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    const SizedBox(height: 40),
                     const Center(
                       child: Text(
-                        'Create an  Account',
+                        'Create an Account',
                         style: TextStyle(
                           fontSize: 22.0,
                           fontWeight: FontWeight.w700,
@@ -45,111 +42,24 @@ class SingUpPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
-                    // Email or Phone Number field
-                    const Text(
-                      'Full Name',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const Text(
-                      'Email Id',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const Text(
-                      'Phone Number',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    // Password field
-                    const Text(
-                      'Password', // Text label for the field
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              // Handle eye icon tap
-                            },
-                            icon: const Icon(Icons.visibility),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const Text(
-                      'Confirm Password', // Text label for the field
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 0.0),
-                    // Terms and Conditions checkbox
+                    const SizedBox(height: 20),
+                    buildTextFormField('Full Name', TextInputType.text),
+                    const SizedBox(height: 20),
+                    buildTextFormField('Email Id', TextInputType.emailAddress),
+                    const SizedBox(height: 20),
+                    buildTextFormField('Phone Number', TextInputType.phone),
+                    const SizedBox(height: 20),
+                    buildTextFormField('Password', TextInputType.text,
+                        obscureText: true),
+                    const SizedBox(height: 20),
+                    buildTextFormField('Confirm Password', TextInputType.text,
+                        obscureText: true),
+                    const SizedBox(height: 20),
                     CheckboxListTile(
-                      contentPadding:const EdgeInsets.symmetric(horizontal: 0.0),
-                      value: false, // Change this value with the checkbox state
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 0.0),
+                      value: false,
+                      // Change this value with the checkbox state
                       onChanged: (value) {
                         // Handle checkbox value change
                       },
@@ -168,21 +78,21 @@ class SingUpPage extends StatelessWidget {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle Sign In button tap
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const VerifyScreen(),
+                                ),
+                              );
                             },
-                            style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                  return Colors.green;
-                                },
-                              ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
                             ),
                             child: const Text(
                               'Sign Up',
@@ -195,37 +105,32 @@ class SingUpPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 10),
                     // "Don't Have an Account? Please Sign Up" text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Already Have an Account?",
+                        const Text(
+                          "Already Have an Account?",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SingInPage()),
+                            );
+                          },
+                          child: const Text(
+                            "Sign In",
                             style: TextStyle(
                               fontSize: 14.0,
                               color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const SingInPage()),
-                              );
-                            },
-                            child: const Text(
-                              "Sign In",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -238,6 +143,35 @@ class SingUpPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildTextFormField(String label, TextInputType keyboardType,
+      {bool obscureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 5),
+        SizedBox(
+          height: 45,
+          child: TextFormField(
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            decoration: InputDecoration(
+              label: Text(label),
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
