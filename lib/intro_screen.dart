@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:logistics_app/sign_in.dart';
 
 class IntroductionScreenPage extends StatefulWidget {
   @override
@@ -46,7 +47,10 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
         curve: Curves.ease,
       );
     } else {
-      // Handle Done action
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SingInPage()),
+      );
     }
   }
 

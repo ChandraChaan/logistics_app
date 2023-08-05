@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:logistics_app/sign_in.dart';
 
-import 'sign_up.dart';
-import 'verify_screen.dart';
-
-class SingInPage extends StatelessWidget {
-  const SingInPage({super.key});
+class SingUpPage extends StatelessWidget {
+  const SingUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +11,11 @@ class SingInPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 7,
-            child: Center(
-              child: SizedBox(
-                height: 220,
-                width: 220,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+            flex: 1,
+            child: Container(),
           ),
           Expanded(
-            flex: 9,
+            flex: 10,
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
@@ -48,7 +37,7 @@ class SingInPage extends StatelessWidget {
                     ),
                     const Center(
                       child: Text(
-                        'Welcome to Gomax',
+                        'Create an  Account',
                         style: TextStyle(
                           fontSize: 22.0,
                           fontWeight: FontWeight.w700,
@@ -59,7 +48,43 @@ class SingInPage extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     // Email or Phone Number field
                     const Text(
-                      'Email Id or Phone Number',
+                      'Full Name',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    SizedBox(
+                      height: 45,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    const Text(
+                      'Email Id',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    SizedBox(
+                      height: 45,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    const Text(
+                      'Phone Number',
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.black,
@@ -101,45 +126,66 @@ class SingInPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10.0),
-                    // Forgot Password button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // Handle Forgot Password button tap
-                        },
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.blue,
-                          ),
+                    const SizedBox(height: 20.0),
+                    const Text(
+                      'Confirm Password', // Text label for the field
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    SizedBox(
+                      height: 45,
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 0.0),
+                    // Terms and Conditions checkbox
+                    CheckboxListTile(
+                      contentPadding:const EdgeInsets.symmetric(horizontal: 0.0),
+                      value: false, // Change this value with the checkbox state
+                      onChanged: (value) {
+                        // Handle checkbox value change
+                      },
+                      title: const Text.rich(
+                        TextSpan(
+                          text: "I agree all ",
+                          children: [
+                            TextSpan(
+                              text: "Terms and Conditions",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    const SizedBox(height: 20.0),
                     Row(
                       children: [
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const VerifyScreen()),
-                              );
+                              // Handle Sign In button tap
                             },
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
+                              MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
                                   return Colors.green;
                                 },
                               ),
                             ),
                             child: const Text(
-                              'Sign In',
+                              'Sign Up',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
@@ -157,7 +203,7 @@ class SingInPage extends StatelessWidget {
                         const Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Don't Have an Account? ",
+                            "Already Have an Account?",
                             style: TextStyle(
                               fontSize: 14.0,
                               color: Colors.black,
@@ -170,12 +216,11 @@ class SingInPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SingUpPage()),
+                                MaterialPageRoute(builder: (context) => const SingInPage()),
                               );
                             },
                             child: const Text(
-                              "Sign Up",
+                              "Sign In",
                               style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
